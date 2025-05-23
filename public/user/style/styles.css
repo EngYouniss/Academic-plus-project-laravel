@@ -1,0 +1,301 @@
+:root {
+  --primary-color: #2c3e50; /* لون رئيسي أنيق */
+  --secondary-color: #e74c3c; /* لون ثانوي مميز */
+  --light-color: #ecf0f1;
+  --dark-color: #2c3e50;
+  --text-color: #333;
+  --text-light: #7f8c8d;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Navbar محسنة */
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 15px 0;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--primary-color) !important;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  margin-right: 10px;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: var(--dark-color) !important;
+  margin: 0 8px;
+  position: relative;
+}
+
+.nav-link.active:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--secondary-color);
+}
+ .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+.btn-login {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  border-radius: 30px;
+  padding: 8px 20px !important;
+  transition: all 0.3s;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Hero Section محسنة */
+.hero-section {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../images/yemen-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 120px 0;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-section .lead {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.hero-section .btn {
+  background-color: var(--secondary-color);
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.hero-section .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Search Section محسنة */
+.search-section {
+  padding: 60px 0;
+  background-color: var(--light-color);
+  text-align: center;
+}
+
+.search-section h2 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.search-section .lead {
+  color: var(--text-light);
+  margin-bottom: 30px;
+}
+
+.search-section .form-control {
+  border-radius: 30px 0 0 30px;
+  border: none;
+  padding: 15px 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.search-section .btn {
+  border-radius: 0 30px 30px 0;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0 25px;
+  border: none;
+}
+
+/* Universities Section محسنة */
+.section-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--secondary-color);
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.card-text {
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+/* Footer محسن */
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 30px 0;
+  margin-top: 50px;
+}
+
+footer a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/* تأثيرات للهواتف */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-section .lead {
+    font-size: 1.2rem;
+  }
+
+  .search-section .form-control {
+    width: 70% !important;
+  }
+  .university-card{
+margin-right: 30px;
+  }
+}
+/* University Card Styling */
+.university-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.university-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Image Container */
+.card-img-container {
+  height: 120px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+}
+
+.university-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
+
+.shape-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: white;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);
+}
+
+/* Card Content */
+.card-body {
+  padding-top: 2.5rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  position: relative;
+}
+
+.card-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: var(--secondary-color);
+  margin: 8px auto 0;
+}
+
+/* List Items */
+.list-unstyled li {
+  padding: 4px 0;
+}
+
+/* Button */
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+}
