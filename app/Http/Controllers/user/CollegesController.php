@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\College;
+use App\Models\University;
 use Illuminate\Http\Request;
 
 class CollegesController extends Controller
@@ -16,8 +17,8 @@ class CollegesController extends Controller
     }
     public function show($id)
     {
-        // Fetch the college with the given ID and its associated departments
-        $college = College::with('university')->where('university_id',$id)->get();
-        return view('user.user_pages.colleges', compact('college'));
+        $colleges = College::with(['university','department','course'])->where('university_id',$id)->get();
+        $university = University::find($id);
+        return view('user.user_pages.colleges', compact('colleges', 'university'));
     }
 }

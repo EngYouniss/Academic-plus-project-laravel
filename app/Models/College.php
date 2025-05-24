@@ -16,4 +16,10 @@ class College extends Model
     public function department(){
         return $this->hasMany(Department::class, 'college_id');
     }
+    public function getCollegeLogoAttribute($collegeLogo){
+        return asset('storage/'. $collegeLogo);
+    }
+    public function course(){
+        return $this->hasMany(Course::class, 'college_id');
+    }
 }

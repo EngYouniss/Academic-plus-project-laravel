@@ -145,7 +145,7 @@
                         <div class="university-card card h-100 border-0" style="max-width: 280px;">
                             <!-- Header with shaped image -->
                             <div class="card-img-container position-relative">
-                                <img src="{{ $university->university_logo }}" alt="جامعة صنعاء" class="university-logo">
+                                <img src="{{ $university->university_logo }}" alt=" {{ $university->university_name }}" class="university-logo">
                                 <div class="shape-overlay"></div>
                             </div>
 
@@ -155,23 +155,21 @@
 
                                 <ul class="list-unstyled small mb-0">
                                     <li class="mb-2">
-                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                        صنعاء، اليمن
+                                        <i class="fas fa-graduation-cap text-primary me-2"></i>
+                                        {{ $university->colleges->count() }} كلية
                                     </li>
                                     <li class="mb-2">
-                                        <i class="fas fa-graduation-cap text-primary me-2"></i>
-                                        24 كلية
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                        {{ $university->university_location }}
                                     </li>
-                                    <li>
-                                        <i class="fas fa-book text-primary me-2"></i>
-                                        500+ مادة دراسية
-                                    </li>
+
+
                                 </ul>
                             </div>
 
                             <!-- Footer -->
                             <div class="card-footer bg-white text-center py-2 border-0">
-                                <x-link href="{{ route('user.university',$university->id) }}" icon="fas fa-eye" text="تصفح الكليات"
+                                <x-link href="{{ route('user.colleges_by_university',$university->id) }}" icon="fas fa-eye" text="تصفح الكليات"
                                     class="btn btn-sm btn-primary px-3" />
                             </div>
                         </div>
