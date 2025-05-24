@@ -23,3 +23,4 @@ Route::get('/user/colleges',[CollegesController::class,'index'])->name('user.fac
 Route::get('/user/departments',[DepartmentsController::class,'index'])->name('user.departments');
 Route::get('/user/department_details',[DepartmentsController::class,'departmentDetails'])->name('user.department_details');
 
+Route::get('/user/university/{id}',[CollegesController::class, 'show'])->name('user.university');

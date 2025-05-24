@@ -18,6 +18,11 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?int $navigationSort = 9;
+    protected static ?string $navigationLabel = 'المستخدمين';
+    protected static ?string $modelLabel = 'مستخدم';
+    protected static ?string $pluralModelLabel = 'المستخدمين';
+    protected static ?string $navigationGroup = ' ادارة المستخدمين';
 
     public static function form(Form $form): Form
     {
@@ -25,16 +30,19 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)->label('اسم المستخدم'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                    ->maxLength(255)->label('البريد الالكتروني'),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->label('تاريخ التحقق من البريد الالكتروني')
+                    ->required()
+                    ->default(now()),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)->label('كلمة المرور'),
             ]);
     }
 
@@ -86,5 +94,4 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-
 }

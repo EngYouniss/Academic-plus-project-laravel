@@ -6,6 +6,7 @@ use App\Filament\Resources\CourseCategoryResource\Pages;
 use App\Filament\Resources\CourseCategoryResource\RelationManagers;
 use App\Models\CourseCategory;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,8 +17,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CourseCategoryResource extends Resource
 {
     protected static ?string $model = CourseCategory::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = ' ادارة أكاديمية';
+    protected static ?string $navigationLabel = 'فئات المقررات الدراسية';
+    protected static ?string $modelLabel = 'فئة مقرر دراسي';
+    protected static ?string $pluralModelLabel = 'فئات المقررات الدراسية';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+protected static ?int $navigationSort=7;
 
     public static function form(Form $form): Form
     {
@@ -25,12 +30,14 @@ class CourseCategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('category_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)->label('اسم الفئة'),
                 Forms\Components\Textarea::make('category_description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('course_id')
+                    ->columnSpanFull()->label('وصف الفئة'),
+                Select::make('course_id')
+                    ->relationship('course', 'course_name')
                     ->required()
-                    ->numeric(),
+                    ->searchable()
+                    ->preload()->label('اسم المقرر الدراسي'),
             ]);
     }
 
@@ -39,17 +46,17 @@ class CourseCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category_name')
-                    ->searchable(),
+                    ->searchable()->label('اسم الفئة'),
                 Tables\Columns\TextColumn::make('course_id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()->label('اسم المقرر الدراسي'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable()->label('تاريخ الانشاء')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable()->label('تاريخ التحديث')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

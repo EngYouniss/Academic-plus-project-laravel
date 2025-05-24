@@ -15,13 +15,19 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UniversityResource extends Resource
 {
     protected static ?string $model = University::class;
+    protected static ?string $navigationGroup = ' ادارة أكاديمية';
+    protected static ?string $navigationLabel = 'الجامعات';
+    protected static ?string $modelLabel = 'جامعة';
+    protected static ?string $pluralModelLabel = 'الجامعات';
 
+protected static ?int $navigationSort=1;
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
@@ -30,24 +36,24 @@ class UniversityResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('university_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)->label('اسم الجامعة'),
                 Forms\Components\TextInput::make('university_location')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)->label('موقع الجامعة'),
 
                     Select::make('university_type')
                     ->options([
                         'Public' => 'Government',
                         'Private' => 'private',
-                    ]),
+                    ])->label('نوع الجامعة')
+                    ->required(),
                 FileUpload::make('university_logo')
                     ->label('University Logo')
-                    ->image()
                     ->disk('public')
-                    ->directory('university_logos')
-                    ->required(),
+                    ->directory('university_logos')->label('شعار الجامعة')
+                    ,
                 Forms\Components\Textarea::make('university_description')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()->label('وصف الجامعة'),
             ]);
     }
 
@@ -56,23 +62,23 @@ class UniversityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('university_name')
-                    ->searchable(),
+                    ->searchable()->label('اسم الجامعة'),
                 Tables\Columns\TextColumn::make('university_location')
-                    ->searchable(),
+                    ->searchable()->label('موقع الجامعة'),
                 Tables\Columns\TextColumn::make('university_type')
-                    ->searchable(),
+                    ->searchable()->label('نوع الجامعة'),
                ImageColumn::make('university_logo')
                     ->label('University Logo')
                     ->disk('public')
                     ->size(50)
-                    ->circular()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->circular()->label('شعار الجامعة')
+                    ,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()->label('تاريخ الانشاء'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable()->label('تاريخ التحديث')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
