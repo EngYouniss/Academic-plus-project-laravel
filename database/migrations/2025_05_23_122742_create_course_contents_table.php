@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('content_name');
             $table->text('content_description')->nullable();
             $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('restrict');
             $table->string('content_type');
             $table->string('content_url')->nullable();
             $table->integer('content_order')->default(0);

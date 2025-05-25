@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $universities = University::all();
+        $universities = University::with(['colleges'])->limit(3)->get();
         return view('user.home',compact('universities'));
     }
 }

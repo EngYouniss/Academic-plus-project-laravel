@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('level_name');
             $table->text('level_description')->nullable();
             $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -26,7 +26,12 @@ Route::get('/courses/{id}',[DepartmentsController::class,'courseDetails'])->name
 
 Route:: group([],function(){
     Route::get('/user/universities',[UniversitiesController::class, 'index'])->name('user.universities');
+    Route::get('/government/universities/',[UniversitiesController::class, 'index'])->name('governmentUniversities');
+Route::get('/private/universities/',[UniversitiesController::class, 'index'])->name('privateUniversities');
 
 Route::get('/user/university/{id}',[CollegesController::class, 'show'])->name('user.colleges_by_university');
 
 })->currentRouteName('universities');
+
+
+Route::get('/course/referencespart',[DepartmentsController::class, 'referencesPart'])->name('course.referencespart');

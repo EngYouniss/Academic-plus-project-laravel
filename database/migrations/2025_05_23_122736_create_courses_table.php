@@ -22,11 +22,11 @@ return new class extends Migration
             $table->unsignedBigInteger('college_id');
             $table->unsignedBigInteger('university_id');
 
-            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('cascade');
-            $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('restrict');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('restrict');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict');
+            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
+            $table->foreign('university_id')->references('id')->on('universities')->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -1,33 +1,34 @@
 <?php
 
 namespace App\Filament\Resources;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\BulkActionGroup;
+
 use App\Filament\Resources\UniversityResource\Pages;
-use App\Filament\Resources\UniversityResource\RelationManagers;
+
 use App\Models\University;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
-use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\QueryException;
 
 class UniversityResource extends Resource
 {
     protected static ?string $model = University::class;
+
     protected static ?string $navigationGroup = ' ادارة أكاديمية';
     protected static ?string $navigationLabel = 'الجامعات';
     protected static ?string $modelLabel = 'جامعة';
     protected static ?string $pluralModelLabel = 'الجامعات';
 
-protected static ?int $navigationSort=1;
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
@@ -36,24 +37,29 @@ protected static ?int $navigationSort=1;
             ->schema([
                 Forms\Components\TextInput::make('university_name')
                     ->required()
-                    ->maxLength(255)->label('اسم الجامعة'),
+                    ->maxLength(255)
+                    ->label('اسم الجامعة'),
                 Forms\Components\TextInput::make('university_location')
                     ->required()
-                    ->maxLength(255)->label('موقع الجامعة'),
+                    ->maxLength(255)
+                    ->label('موقع الجامعة'),
 
-                    Select::make('university_type')
+                Select::make('university_type')
                     ->options([
-                        'Public' => 'Government',
-                        'Private' => 'private',
-                    ])->label('نوع الجامعة')
+                        'حكومية' => 'حكومية',
+                        'خاصة' => 'خاصة',
+                    ])
+                    ->label('نوع الجامعة')
                     ->required(),
+
                 FileUpload::make('university_logo')
-                    ->label('University Logo')
+                    ->label('شعار الجامعة')
                     ->disk('public')
-                    ->directory('university_logos')->label('شعار الجامعة')
-                    ,
+                    ->directory('university_logos'),
+
                 Forms\Components\Textarea::make('university_description')
-                    ->columnSpanFull()->label('وصف الجامعة'),
+                    ->columnSpanFull()
+                    ->label('وصف الجامعة'),
             ]);
     }
 
@@ -62,23 +68,27 @@ protected static ?int $navigationSort=1;
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('university_name')
-                    ->searchable()->label('اسم الجامعة'),
+                    ->searchable()
+                    ->label('اسم الجامعة'),
                 Tables\Columns\TextColumn::make('university_location')
-                    ->searchable()->label('موقع الجامعة'),
+                    ->searchable()
+                    ->label('موقع الجامعة'),
                 Tables\Columns\TextColumn::make('university_type')
-                    ->searchable()->label('نوع الجامعة'),
-               ImageColumn::make('university_logo')
-                    ->label('University Logo')
+                    ->searchable()
+                    ->label('نوع الجامعة'),
+                ImageColumn::make('university_logo')
+                    ->label('شعار الجامعة')
                     ->disk('public')
                     ->size(50)
-                    ->circular()->label('شعار الجامعة')
-                    ,
+                    ->circular(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()->label('تاريخ الانشاء'),
+                    ->sortable()
+                    ->label('تاريخ الإنشاء'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()->label('تاريخ التحديث')
+                    ->sortable()
+                    ->label('تاريخ التحديث')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
@@ -86,10 +96,47 @@ protected static ?int $navigationSort=1;
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+
+                DeleteAction::make()
+                    ->action(function ($record) {
+                        try {
+                            $record->delete();
+
+                            Notification::make()
+                                ->title('تم حذف الجامعة بنجاح')
+                                ->success()
+                                ->send();
+                        } catch (QueryException $e) {
+                            if ($e->getCode() === '23000') {
+                                Notification::make()
+                                    ->title('لا يمكن حذف الجامعة لأنها مرتبطة بكليات.')
+                                    ->danger()
+                                    ->send();
+                            } else {
+                                Notification::make()
+                                    ->title('حدث خطأ أثناء الحذف.')
+                                    ->danger()
+                                    ->send();
+                            }
+                        }
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+                                try {
+                                    $record->delete();
+                                } catch (QueryException $e) {
+                                    Notification::make()
+                                        ->title('تعذر حذف بعض الجامعات بسبب ارتباطها بكليات.')
+                                        ->danger()
+                                        ->send();
+                                    break;
+                                }
+                            }
+                        }),
                 ]),
             ]);
     }
@@ -104,7 +151,7 @@ protected static ?int $navigationSort=1;
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUniversities::route('/'),
+            'index' => pages\ListUniversities::route('/'),
             'create' => Pages\CreateUniversity::route('/create'),
             'edit' => Pages\EditUniversity::route('/{record}/edit'),
         ];

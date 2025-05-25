@@ -82,7 +82,7 @@
     @yield('content')
   </body>
  <!-- تذييل الصفحة المحسن -->
-  <footer class="bg-dark text-white pt-5 pb-4 text-center">
+<footer class="text-white pt-5 pb-4 text-center" style="background: linear-gradient(to right, #22653e, #70bc90);">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 mb-4">

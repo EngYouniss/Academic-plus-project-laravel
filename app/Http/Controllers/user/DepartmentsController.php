@@ -38,10 +38,15 @@ class DepartmentsController extends Controller
     return view('user.user_pages.department_details', compact('courses'));
 }
 
-    
+
     public function courseDetails($id)
     {
         $course = Course::with(['department', 'level', 'semester'])->findOrFail($id);
         return view('user.user_pages.course_details', compact('course'));
+    }
+
+    public function referencesPart()
+    {
+        return view('user.user_pages.part_references');
     }
 }
