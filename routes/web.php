@@ -34,4 +34,14 @@ Route::get('/user/university/{id}',[CollegesController::class, 'show'])->name('u
 })->currentRouteName('universities');
 
 
-Route::get('/course/referencespart',[DepartmentsController::class, 'referencesPart'])->name('course.referencespart');
+// Route::get('/course/referencespart',[DepartmentsController::class, 'referencesPart'])->name('course.referencespart');
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('user.home');
+//     })->name('dashboard');
+// });

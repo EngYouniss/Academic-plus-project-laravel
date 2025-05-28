@@ -3,9 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CollegeResource\Pages;
+use App\Filament\Resources\CollegeResource\RelationManagers\DepartmentRelationManager;
 use App\Models\College;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -44,14 +46,15 @@ class CollegeResource extends Resource
                     ->label('الجامعة التابعة')
                     ->required(),
 
-                FileUpload::make('college_logo')
+                    Section::make([
+                          FileUpload::make('college_logo')
                     ->label('شعار الكلية')
                     ->disk('public')
                     ->directory('college_logos'),
 
                 Forms\Components\Textarea::make('college_description')
-                    ->columnSpanFull()
-                    ->label('وصف الكلية'),
+                     ->label('وصف الكلية')->minLength(10)->required(),
+                    ])->columns(2),
             ]);
     }
 
@@ -76,7 +79,7 @@ class CollegeResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->label('تاريخ الإنشاء'),
+                    ->label('تاريخ الإنشاء')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -88,7 +91,7 @@ class CollegeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                DeleteAction::make()
+                DeleteAction::make()->hidden()
                     ->action(function ($record) {
                         try {
                             $record->delete();
@@ -135,7 +138,7 @@ class CollegeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DepartmentRelationManager::class,
         ];
     }
 

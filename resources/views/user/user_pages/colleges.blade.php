@@ -41,7 +41,7 @@
         <hr>
        @if ($colleges->count() > 0)
         @foreach ($colleges as $college)
-            <div class="col-lg-3 col-md-3 mb-4">
+            <div class="col-lg-2.6 col-md-3 mb-4" style="margin-right: 0;max-width: 300px;">
                 <div class="university-card card h-100 border-0" style="max-width: 280px;">
                     <!-- Header with shaped image -->
                     <div class="card-img-container position-relative">

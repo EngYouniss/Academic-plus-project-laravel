@@ -71,7 +71,7 @@
           </li>
         </ul>
         <div class="d-flex">
-          <a class="btn btn-login" href="./docs/login.html">
+          <a class="btn btn-login" href="{{route('login')}}">
             <i class="fas fa-sign-in-alt me-1"></i> تسجيل الدخول
           </a>
         </div>

@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('dashboard')
             ->login()
-             ->brandName('أكاديميك بلس') // ✅ هذا هو العنوان المخصص الذي سيظهر في الترويسة
+             ->brandName('أكاديميك بلس')
 
             ->colors([
                 'primary' => Color::Amber,

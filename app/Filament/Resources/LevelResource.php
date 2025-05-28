@@ -48,7 +48,7 @@ protected static ?int $navigationSort=4;
             ->columns([
                 Tables\Columns\TextColumn::make('level_name')
                     ->searchable()->label('اسم المستوى الدراسي'),
-                Tables\Columns\TextColumn::make('department_id')
+                Tables\Columns\TextColumn::make('department.department_name')
                     ->numeric()
                     ->sortable()->label('اسم القسم'),
                 Tables\Columns\TextColumn::make('created_at')

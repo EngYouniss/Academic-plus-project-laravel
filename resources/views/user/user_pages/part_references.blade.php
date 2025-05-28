@@ -55,7 +55,7 @@
         --accent: #4776E6;
         --dark: #2c3e50;
         --light: #f8f9fa;
-       
+
     }
 
     .legendary-references-page {

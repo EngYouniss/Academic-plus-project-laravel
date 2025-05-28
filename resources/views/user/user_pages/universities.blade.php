@@ -32,7 +32,7 @@
                                         <i class="fas fa-search fs-5 text-primary"></i>
                                     </button>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -197,24 +197,3 @@
         </div>
     </main>
 @endsection
-
-<style>
-    /* تحسينات بسيطة للهيرو فقط */
-    .hero-section {
-        background: linear-gradient(135deg, #401d79, #2e073d00);
-        padding-bottom: 100px;
-        margin-bottom: 30px;
-    }
-
-    .hero-section .form-control {
-        border-radius: 0 !important;
-    }
-
-    .hero-section .input-group {
-        border-radius: 50px !important;
-    }
-
-    .hero-section .btn-light {
-        border-radius: 0 50px 50px 0 !important;
-    }
-</style>

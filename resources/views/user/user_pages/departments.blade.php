@@ -56,7 +56,7 @@
 
                 <!-- زر البحث -->
                 <div class="col-12 text-center mt-4">
-                    <input type="submit" class="btn btn-primary btn-lg rounded-pill px-5" value="عرض المواد">
+                    <input type="submit" class="btn btn-outline-primary px-4" value="عرض المواد">
 
                 </div>
 

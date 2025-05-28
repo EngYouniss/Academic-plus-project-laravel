@@ -6,6 +6,7 @@ use App\Filament\Resources\CourseCategoryResource\Pages;
 use App\Filament\Resources\CourseCategoryResource\RelationManagers;
 use App\Models\CourseCategory;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,16 +29,19 @@ protected static ?int $navigationSort=7;
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category_name')
+               Section::make([
+                 Forms\Components\TextInput::make('category_name')
                     ->required()
                     ->maxLength(255)->label('اسم الفئة'),
-                Forms\Components\Textarea::make('category_description')
-                    ->columnSpanFull()->label('وصف الفئة'),
-                Select::make('course_id')
+                    Select::make('course_id')
                     ->relationship('course', 'course_name')
                     ->required()
                     ->searchable()
                     ->preload()->label('اسم المقرر الدراسي'),
+                Forms\Components\Textarea::make('category_description')
+                    ->columnSpanFull()->label('وصف الفئة'),
+               ])->columns(2)
+
             ]);
     }
 

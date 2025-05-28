@@ -38,9 +38,16 @@ protected static ?int $navigationSort=8;
                     ->required()
                     ->searchable()
                     ->preload()->label('اسم المقرر الدراسي'),
-                Forms\Components\TextInput::make('content_type')
+                Select::make('content_type')
+                    ->options([
+                        'exam' => 'اختبار',
+                        'book' => 'كتاب',
+                        'summary' => ' ملخص',
+                        'course' => 'كورس',
+                    ])
                     ->required()
-                    ->maxLength(255)->label('نوع المحتوى'),
+                    ->default('book')
+                    ->label('نوع المحتوى'),
                 Forms\Components\TextInput::make('content_url')
                     ->maxLength(255)
                     ->default(null)->label('رابط المحتوى'),
