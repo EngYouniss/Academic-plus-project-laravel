@@ -25,7 +25,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('dashboard')
+            ->path('admin-dashboard')
             ->login()
              ->brandName('أكاديميك بلس')
 

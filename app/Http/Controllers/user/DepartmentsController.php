@@ -12,45 +12,56 @@ use Illuminate\Http\Request;
 
 class DepartmentsController extends Controller
 {
+    // عرض الأقسام الخاصة بكل كلية
     public function index($id)
     {
         $departments = Department::where('college_id', $id)->with('college')->get();
         $levels = Level::all();
         $semesters = Semester::all();
+
         return view('user.user_pages.departments', compact('departments', 'levels', 'semesters'));
     }
+
+    // عرض تفاصيل المواد بحسب القسم والمستوى والفصل
     public function departmentDetails(Request $request)
     {
-        // تحقق من صحة البيانات
         $request->validate([
             'department' => 'required|integer',
             'level' => 'required|integer',
             'semester' => 'required|integer',
         ]);
 
-        // جلب المواد حسب الخيارات
         $courses = Course::where('department_id', $request->department)
             ->where('level_id', $request->level)
             ->where('semester_id', $request->semester)
             ->with(['department', 'level', 'semester'])
             ->get();
 
-        // عرض الصفحة مع النتائج
         return view('user.user_pages.department_details', compact('courses'));
     }
 
+    // عرض صفحة تفاصيل الكورس ومحتوياته
+  public function courseDetails(Request $request, $id)
+{
+    $course = Course::with(['department', 'level', 'semester'])->findOrFail($id);
+    $type = $request->query('type'); // جلب نوع المحتوى من الرابط
 
-    public function courseDetails($id)
+    // فلترة المحتوى حسب النوع إن وجد
+    $courseContents = CourseContent::where('course_id', $id)
+        ->when($type, function ($query, $type) {
+            return $query->where('content_type', $type);
+        })
+        ->get();
+
+    return view('user.user_pages.course_details', compact('course', 'courseContents'));
+}
+
+
+    // فلترة محتويات من نوع "كتاب" فقط (غير مستخدمة حاليًا، يمكنك استخدامها لاحقًا)
+    public function booksContent($id)
     {
-        $courses = Course::with(['department', 'level', 'semester'])->findOrFail($id);
-        $courseContents = CourseContent::where('course_id', $id)->get();
-
-        return view('user.user_pages.course_details', compact('courses', 'courseContents'));
+        return CourseContent::where('course_id', $id)
+            ->where('content_type', 'book')
+            ->get();
     }
-
-    // public function referencesPart()
-    // {
-    //     return view('user.user_pages.part_references');
-    // }
-
 }

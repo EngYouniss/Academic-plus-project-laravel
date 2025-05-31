@@ -40,10 +40,10 @@ protected static ?int $navigationSort=8;
                     ->preload()->label('اسم المقرر الدراسي'),
                 Select::make('content_type')
                     ->options([
-                        'exam' => 'اختبار',
-                        'book' => 'كتاب',
-                        'summary' => ' ملخص',
-                        'course' => 'كورس',
+                        'اختبار' => 'اختبار',
+                        'كتاب' => 'كتاب',
+                        'ملخص' => ' ملخص',
+                        'كورس' => 'كورس',
                     ])
                     ->required()
                     ->default('book')
