@@ -7,6 +7,7 @@ use App\Filament\Resources\UniversityResource\RelationManagers\CollegesRelationM
 use App\Models\University;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -35,31 +36,36 @@ class UniversityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('university_name')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('اسم الجامعة'),
-                Forms\Components\TextInput::make('university_location')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('موقع الجامعة'),
-
-                Select::make('university_type')
-                    ->options([
-                        'حكومية' => 'حكومية',
-                        'خاصة' => 'خاصة',
-                    ])
-                    ->label('نوع الجامعة')
-                    ->required(),
-
-                FileUpload::make('university_logo')
-                    ->label('شعار الجامعة')
-                    ->disk('public')
-                    ->directory('university_logos'),
-
-                Forms\Components\Textarea::make('university_description')
+                Section::make('معلومات الجامعة')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('university_name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('اسم الجامعة'),
+                        Forms\Components\TextInput::make('university_location')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('موقع الجامعة'),
+                             Select::make('university_type')
+                            ->options([
+                                'حكومية' => 'حكومية',
+                                'خاصة' => 'خاصة',
+                            ])
+                            ->label('نوع الجامعة')
+                            ->required(),
+                        FileUpload::make('university_logo')
+                            ->label('شعار الجامعة')
+                            ->disk('public')
+                            ->directory('university_logos'),
+                             Forms\Components\Textarea::make('university_description')
                     ->columnSpanFull()
                     ->label('وصف الجامعة'),
+                    ]),
+              
+
+
+
             ]);
     }
 
@@ -69,12 +75,15 @@ class UniversityResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('university_name')
                     ->searchable()
+                    ->sortable()
                     ->label('اسم الجامعة'),
                 Tables\Columns\TextColumn::make('university_location')
                     ->searchable()
+                    ->sortable()
                     ->label('موقع الجامعة'),
                 Tables\Columns\TextColumn::make('university_type')
                     ->searchable()
+                    ->sortable()
                     ->label('نوع الجامعة'),
                 ImageColumn::make('university_logo')
                     ->label('شعار الجامعة')
@@ -84,9 +93,11 @@ class UniversityResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
+                    ->sortable()
                     ->label('تاريخ الإنشاء'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
+                    ->sortable()
                     ->sortable()
                     ->label('تاريخ التحديث')
                     ->toggleable(isToggledHiddenByDefault: true),
